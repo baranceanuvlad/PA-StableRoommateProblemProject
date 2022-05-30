@@ -1,0 +1,5 @@
+create table roommates(
+    id integer,
+    firstName varchar2(50),
+    lastName varchar2(50)
+)

@@ -1,5 +1,10 @@
+import Algorithms.Irving;
+
 public class Main {
     public static void main(String args[]){
-        System.out.println("Hello!");
+
+        Irving problema=new Irving();
+        problema.solve();
+
     }
 }
