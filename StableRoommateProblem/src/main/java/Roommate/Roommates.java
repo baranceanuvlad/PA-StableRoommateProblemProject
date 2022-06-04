@@ -30,6 +30,8 @@ public class Roommates {
     private String lastname;
     @Transient
     public List<Roommates> preferences;
+    @Transient
+    int index;
 
     public BigInteger getId() {
         return id;
@@ -61,6 +63,17 @@ public class Roommates {
                 .getResultList();
     }
 
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public Roommates() {
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,6 +86,11 @@ public class Roommates {
         if (lastname != null ? !lastname.equals(roommates.lastname) : roommates.lastname != null) return false;
 
         return true;
+    }
+
+    public Roommates(String firstname, String lastname) {
+        this.firstname = firstname;
+        this.lastname = lastname;
     }
 
     @Override
@@ -89,7 +107,7 @@ public class Roommates {
                 "id=" + id +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
-                ", preferences=" + preferences +
+                //", preferences=" + preferences +
                 '}';
     }
 }

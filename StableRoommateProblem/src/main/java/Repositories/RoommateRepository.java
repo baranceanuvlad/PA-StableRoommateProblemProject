@@ -6,7 +6,7 @@ import Utilities.PersistanceManager;
 import java.util.List;
 
 public class RoommateRepository {
-    public void create(Roommates entity){
+    static public void create(Roommates entity){
         PersistanceManager.getEm().getTransaction().begin();
         PersistanceManager.getEm().persist(entity);
         PersistanceManager.getEm().getTransaction().commit();

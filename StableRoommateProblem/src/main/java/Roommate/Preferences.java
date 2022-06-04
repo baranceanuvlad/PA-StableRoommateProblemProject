@@ -17,6 +17,12 @@ public class Preferences {
     @Column(name = "POZPREFERED")
     private BigInteger pozprefered;
 
+    public Preferences(int i, Integer id, int indexOf) {
+        this.idperson= BigInteger.valueOf(i);
+        this.idprefered= BigInteger.valueOf(id);
+        this.pozprefered= BigInteger.valueOf(indexOf);
+    }
+
     public BigInteger getIdperson() {
         return idperson;
     }
@@ -41,6 +47,15 @@ public class Preferences {
         this.pozprefered = pozprefered;
     }
 
+    public Preferences() {
+    }
+
+    public Preferences(BigInteger idperson, BigInteger idprefered, BigInteger pozprefered) {
+        this.idperson = idperson;
+        this.idprefered = idprefered;
+        this.pozprefered = pozprefered;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -61,5 +76,14 @@ public class Preferences {
         result = 31 * result + (idprefered != null ? idprefered.hashCode() : 0);
         result = 31 * result + (pozprefered != null ? pozprefered.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Preferences{" +
+                "idperson=" + idperson +
+                ", idprefered=" + idprefered +
+                ", pozprefered=" + pozprefered +
+                '}';
     }
 }
