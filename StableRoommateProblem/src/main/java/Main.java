@@ -14,8 +14,8 @@ public class Main {
 
         Irving problema=new Irving();
         problema.solve();
-        System.out.println(problema.propolsals);
-        System.out.println(problema.accepted);
+        //System.out.println(problema.propolsals);
+        //System.out.println(problema.accepted);
         //creareTest();
 
     }

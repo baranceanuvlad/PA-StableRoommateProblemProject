@@ -3,9 +3,7 @@ package Algorithms;
 import Repositories.RoommateRepository;
 import Roommate.Roommates;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class Irving {
     public List<Roommates> participants=new ArrayList<>();
@@ -27,7 +25,7 @@ public class Irving {
             roommates.setPreferences();
             roommates.setIndex(participants.indexOf(roommates)+1);
         }
-        System.out.println(participants);
+        //System.out.println(participants);
         for(Roommates roommates:participants){
             for(Iterator<Roommates> iterator= roommates.preferences.listIterator();iterator.hasNext();){
                 Roommates proposed=iterator.next();
@@ -103,11 +101,52 @@ public class Irving {
                 }
 
             }
-            System.out.println("Salut");
+            //System.out.println("Salut");
 
 
         }
         removePreferences();
+        solvePhase2();
+        printResult();
+    }
+
+    private void printResult() {
+        Map<Roommates,Roommates> ans=new HashMap<>();
+        for(Roommates mates:participants){
+            if(!ans.containsKey(mates)&&!ans.containsValue(mates)){
+                ans.put(mates,mates.preferences.get(0));
+            }
+        }
+        System.out.println(ans);
+    }
+
+    private void solvePhase2() {
+        for(Roommates mates:participants){
+            while(mates.preferences.size()>1){
+                List<Roommates> ciclu=new ArrayList<>();
+                ciclu.add(mates);
+                ciclu.add(mates.preferences.get(1));
+                Roommates curent=mates.preferences.get(1).preferences.get(mates.preferences.get(1).preferences.size()-1);
+                while(!curent.equals(mates)){
+                    ciclu.add(curent);
+                    curent=curent.preferences.get(1);
+                    ciclu.add(curent);
+                    curent=curent.preferences.get(curent.preferences.size()-1);
+                }
+                ciclu.add(mates);
+                for(Iterator<Roommates> iterator=ciclu.listIterator();iterator.hasNext();){
+                    Roommates mateBottom=iterator.next();
+                    if(mateBottom.equals(mates))
+                        continue;
+                    else{
+                        Roommates mateUpper=iterator.next();
+                        mateBottom.preferences.remove(mateUpper);
+                        mateUpper.preferences.remove(mateBottom);
+                    }
+
+                }
+            }
+        }
     }
 
     private void removePreferences() {
@@ -120,8 +159,14 @@ public class Irving {
                 }
                 else
                     if(ok==1){
+                        preferences.preferences.remove(mate);
                         iterator.remove();
                     }
+            }
+        }
+        for(Roommates mate:participants){
+            if(mate.preferences.size()<1){
+                System.out.println("Nu este posibila o configuratie stabila");
             }
         }
     }
