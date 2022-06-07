@@ -3,8 +3,10 @@ import Repositories.PreferencesRepository;
 import Repositories.RoommateRepository;
 import Roommate.Preferences;
 import Roommate.Roommates;
+import Threads.Client;
 import com.github.javafaker.Faker;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,8 +14,11 @@ import java.util.List;
 public class Main {
     public static void main(String args[]){
 
-        Irving problema=new Irving();
-        problema.solve();
+        Client client=new Client();
+        client.run();
+
+        //Irving problema=new Irving();
+        //problema.solve();
         //System.out.println(problema.propolsals);
         //System.out.println(problema.accepted);
         //creareTest();
