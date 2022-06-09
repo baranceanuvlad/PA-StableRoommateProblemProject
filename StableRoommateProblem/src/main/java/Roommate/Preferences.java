@@ -4,37 +4,39 @@ import javax.persistence.*;
 import java.math.BigInteger;
 
 @Entity
-@NamedQueries(
-        @NamedQuery(name="UpdatePreferences",
+@NamedQueries({
+        @NamedQuery(name = "Preferences.UpdatePreferences",
                 query = "update Preferences p set p.pozprefered=p.pozprefered+1 where p.idperson=?1 and p.pozprefered>?2"),
-        @NamedQuery(name="DeletePreferences",
-        query = "delete from Preferences p where p.idperson=?1"),
-        @NamedQuery(name="DeleteSPreferences",query = "delete from Preferences p where p.idperson=?1 or p.idprefered=?1")
-)
+        @NamedQuery(name = "Preferences.DeletePreferences",
+                query = "delete from Preferences p where p.idperson=?1"),
+        @NamedQuery(name = "Preferences.GetPreferences",
+                query = "select p from Preferences p where p.idperson=?1"),
+        @NamedQuery(name = "Preferences.DeleteSPreferences", query = "select p from Preferences p where p.idperson=?1 or p.idprefered=?1")
+})
 public class Preferences {
     @Basic
     @Id
     @Column(name = "IDPERSON")
-    private BigInteger idperson;
+    private Integer idperson;
     @Basic
     @Id
     @Column(name = "IDPREFERED")
     private BigInteger idprefered;
     @Basic
     @Column(name = "POZPREFERED")
-    private BigInteger pozprefered;
+    private Integer pozprefered;
 
-    public Preferences(BigInteger i, Integer id, int indexOf) {
+    public Preferences(Integer i, Integer id, int indexOf) {
         this.idperson= i;
         this.idprefered= BigInteger.valueOf(id);
-        this.pozprefered= BigInteger.valueOf(indexOf);
+        this.pozprefered= indexOf;
     }
 
-    public BigInteger getIdperson() {
+    public Integer getIdperson() {
         return idperson;
     }
 
-    public void setIdperson(BigInteger idperson) {
+    public void setIdperson(Integer idperson) {
         this.idperson = idperson;
     }
 
@@ -46,18 +48,18 @@ public class Preferences {
         this.idprefered = idprefered;
     }
 
-    public BigInteger getPozprefered() {
+    public Integer getPozprefered() {
         return pozprefered;
     }
 
-    public void setPozprefered(BigInteger pozprefered) {
+    public void setPozprefered(Integer pozprefered) {
         this.pozprefered = pozprefered;
     }
 
     public Preferences() {
     }
 
-    public Preferences(BigInteger idperson, BigInteger idprefered, BigInteger pozprefered) {
+    public Preferences(Integer idperson, BigInteger idprefered, Integer pozprefered) {
         this.idperson = idperson;
         this.idprefered = idprefered;
         this.pozprefered = pozprefered;

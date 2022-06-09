@@ -22,7 +22,7 @@ public class Roommates {
     )
     @Id
     @Column(name = "ID")
-    private BigInteger id;
+    private Integer id;
     @Basic
     @Column(name = "FIRSTNAME")
     private String firstname;
@@ -34,11 +34,11 @@ public class Roommates {
     @Transient
     int index;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(BigInteger id) {
+    public void setId(int id) {
         this.id = id;
     }
 

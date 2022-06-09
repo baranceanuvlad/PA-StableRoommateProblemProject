@@ -21,4 +21,10 @@ public class RoommateRepository {
                 .setParameter(2,lastName)
                 .getSingleResult();
     }
+    static public List<Roommates> findPreferences(int id){
+
+        return PersistanceManager.getEm().createNamedQuery("Roommates.getPreferences")
+                .setParameter(1,id)
+                .getResultList();
+    }
 }

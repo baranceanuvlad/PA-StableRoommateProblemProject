@@ -47,8 +47,20 @@ public class Client{
             }
             try {
                 String response = in.readLine();
+                if(response.contains("#")){
+                    response=null;
+                    StringBuilder raspuns=new StringBuilder();
+                    while((response=in.readLine()).length()>2){
+                        raspuns.append(response);
+                        raspuns.append('\n');
+                    }
+                    System.out.println(raspuns.toString());
+                    response=raspuns.toString();
+                }
                 if (response != null)
                     mainFrame.showMessage(response);
+                else
+                    continue;
                 if (s.equals("exit")) {
                     running = false;
                     break;

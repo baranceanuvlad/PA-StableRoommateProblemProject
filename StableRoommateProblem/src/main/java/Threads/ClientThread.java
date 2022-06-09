@@ -94,8 +94,19 @@ public class ClientThread extends Thread {
                 else if (command[0].equals("solve")) {
                     Irving problema=new Irving();
                     Map<Roommates,Roommates> map=problema.solve();
-                    out.println(map.toString());
-                    out.flush();
+                    if(map==null)
+                    {
+                        out.println("Nu este configuratie stabila!");
+                        out.flush();
+                    }
+                    else {
+                        StringBuilder ans = new StringBuilder();
+                        ans.append('#').append('\n');
+                        for (Map.Entry<Roommates, Roommates> entry : map.entrySet())
+                            ans.append(entry.getKey()).append("->").append(entry.getValue()).append('\n');
+                        out.println(ans.toString());
+                        out.flush();
+                    }
                 } else if(command[0].equals("add")){
                     String firstName=command[1];
                     String lastName=command[2];
@@ -107,7 +118,7 @@ public class ClientThread extends Thread {
                     RoommateRepository.create(new Roommates(firstName,lastName));
                     Roommates roommates=RoommateRepository.findByFirstNameLastName(firstName,lastName);
                     for(int i=0;i<pref.size();i++)
-                        PreferencesRepository.create(new Preferences(BigInteger.valueOf(roommates.getId()),RoommateRepository.findByFirstNameLastName(pref.get(i),pref.get(i+1)).getId(),i/2+1));
+                        PreferencesRepository.create(new Preferences(roommates.getId(),RoommateRepository.findByFirstNameLastName(pref.get(i),pref.get(i+1)).getId(),i/2+1));
 
                     out.println("Am adaugat student!");
                     out.flush();
@@ -120,7 +131,7 @@ public class ClientThread extends Thread {
                     Roommates roommates=RoommateRepository.findByFirstNameLastName(firstName,lastName);
                     PreferencesRepository.deletePreferences(roommates.getId());
                     for(int i=0;i<pref.size();i+=2)
-                        PreferencesRepository.create(new Preferences(BigInteger.valueOf(roommates.getId()),RoommateRepository.findByFirstNameLastName(pref.get(i),pref.get(i+1)).getId(),i/2+1));
+                        PreferencesRepository.create(new Preferences(roommates.getId(),RoommateRepository.findByFirstNameLastName(pref.get(i),pref.get(i+1)).getId(),i/2+1));
                     out.println("Am modificat student!");
                     out.flush();
                 }
@@ -133,8 +144,16 @@ public class ClientThread extends Thread {
                     Roommates roommates1=RoommateRepository.findByFirstNameLastName(firstName1,lastName1);
                     Roommates roommates2=RoommateRepository.findByFirstNameLastName(firstName2,lastName2);
                     PreferencesRepository.updatePreferences(roommates1.getId(),poz);
-                    PreferencesRepository.create(new Preferences(BigInteger.valueOf(roommates1.getId()),roommates2.getId(),poz));
+                    PreferencesRepository.create(new Preferences((roommates1.getId()),roommates2.getId(),poz));
                     out.println("Adaugam preferinta!");
+                    out.flush();
+                }
+                else if (command[0].equals("show")){
+                    String firstName=command[1];
+                    String lastName=command[2];
+                    Roommates roommates=RoommateRepository.findByFirstNameLastName(firstName,lastName);
+                    //////////
+                    out.println("Stergem student!");
                     out.flush();
                 }
                 else if (command[0].equals("delete")){

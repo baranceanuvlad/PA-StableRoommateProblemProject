@@ -105,9 +105,12 @@ public class Irving {
 
 
         }
-        removePreferences();
-        solvePhase2();
-        return printResult();
+        if(removePreferences().equals("ok")) {
+            solvePhase2();
+            return printResult();
+        }
+        else
+            return null;
     }
 
     private Map<Roommates,Roommates> printResult() {
@@ -149,7 +152,7 @@ public class Irving {
         }
     }
 
-    private void removePreferences() {
+    private String removePreferences() {
         for(Roommates mate:participants){
             int ok=0;
             for(Iterator<Roommates> iterator=mate.preferences.listIterator();iterator.hasNext();){
@@ -166,9 +169,10 @@ public class Irving {
         }
         for(Roommates mate:participants){
             if(mate.preferences.size()<1){
-                System.out.println("Nu este posibila o configuratie stabila");
+                return "Nu este posibila o configuratie stabila";
             }
         }
+        return "ok";
     }
 
     private void resetPropolsals() {

@@ -76,9 +76,18 @@ public class MainFrame {
                 setMessage("addp "+id1+" "+id2+" "+nr);
             }
         });
+        JButton showBtn=new JButton("Show Preferences");
+        showBtn.setBounds(100,300,200,40);
+        showBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String id1=JOptionPane.showInputDialog("Insert the student's first and last name: ");
+                setMessage("show "+id1);
+            }
+        });
 
         JButton exitBtn=new JButton("exit");
-        exitBtn.setBounds(150,300,100, 40);//x axis, y axis, width, height
+        exitBtn.setBounds(75,350,100, 40);//x axis, y axis, width, height
         exitBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -87,7 +96,7 @@ public class MainFrame {
         });
 
         JButton exitServerBtn=new JButton("exit server");
-        exitServerBtn.setBounds(150,350,100, 40);//x axis, y axis, width, height
+        exitServerBtn.setBounds(225,350,100, 40);//x axis, y axis, width, height
         exitServerBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -98,6 +107,7 @@ public class MainFrame {
         f.add(modBtn);
         f.add(delBtn);
         f.add(solveBtn);
+        f.add(showBtn);
         f.add(addPrefBtn);
         f.add(exitBtn);//adding button in JFrame
         f.add(exitServerBtn);
