@@ -1,5 +1,7 @@
 package Threads;
 
+import UI.MainFrame;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,6 +11,8 @@ import java.net.UnknownHostException;
 import java.util.Scanner;
 
 public class Client{
+    public String s=null;
+    private MainFrame mainFrame=new MainFrame();
     public Client() {
 
     }
@@ -21,6 +25,7 @@ public class Client{
         Socket socket = null;
         PrintWriter out = null;
         BufferedReader in = null;
+        mainFrame.draw();
         try {
             socket = new Socket(serverAddress, PORT);
             out = new PrintWriter(socket.getOutputStream(), true);
@@ -28,11 +33,18 @@ public class Client{
                     new InputStreamReader(socket.getInputStream()));
 
         while (running) {
-            String s = command.nextLine();
+            s=mainFrame.getMessage();
+            if(s==null)
+                continue;
+            System.out.println("Citesc comanda...");
+            //String s = command.nextLine();
             // Send a request to the server
             out.println(s);
             out.flush();
-
+            if (s.equals("exit") || s.equals("exitServer")) {
+                System.out.println("Se inchide clientul");
+                System.exit(0);
+            }
             try {
                 String response = in.readLine();
                 if (response != null)
@@ -41,9 +53,15 @@ public class Client{
                     running = false;
                     break;
                 }
+                else if(response.equals("exitServer")){
+                    System.exit(0);
+                }
             } catch (IOException e) {
-                System.err.println("Nothing to read");
+                System.out.println("Serverul s-a inchis!");
+                System.exit(0);
+                //System.err.println("Nothing to read");
             }
+            mainFrame.setMessage(null);
         }
         } catch (UnknownHostException e) {
             System.err.println("No server listening!");
