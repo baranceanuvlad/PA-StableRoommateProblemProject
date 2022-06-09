@@ -12,7 +12,7 @@ public class RoommateRepository {
         PersistanceManager.getEm().getTransaction().commit();
     }
     static public List<Roommates> findAll(){
-       return PersistanceManager.getEm().createNamedQuery("Roommates.getAll")
+        return PersistanceManager.getEm().createNamedQuery("Roommates.getAll")
                 .getResultList();
     }
     static public Roommates findByFirstNameLastName(String firstName,String lastName){

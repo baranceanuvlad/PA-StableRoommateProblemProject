@@ -15,4 +15,12 @@ public class PreferencesRepository {
                 .setParameter(1,id)
                 .setParameter(2,poz);
     }
+    static public void deletePreferences(int id){
+        PersistanceManager.getEm().createNamedQuery("DeletePreferences")
+                .setParameter(1,id);
+    }
+    static public void deleteSPreferences(int id){
+        PersistanceManager.getEm().createNamedQuery("DeleteSPreferences")
+                .setParameter(1,id);
+    }
 }

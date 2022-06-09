@@ -85,11 +85,11 @@ public class Irving {
                                         conflict.preferences.remove(mate);
                                     }
                                     else{
-                                         Roommates aux=participants.get(propolsals.get(conflict.getIndex())-1);
-                                         propolsals.set(conflict.getIndex(), mate.getIndex());
-                                         accepted.set(conflict.getIndex(), mate.getIndex());
-                                         mate=aux;
-                                         break;
+                                        Roommates aux=participants.get(propolsals.get(conflict.getIndex())-1);
+                                        propolsals.set(conflict.getIndex(), mate.getIndex());
+                                        accepted.set(conflict.getIndex(), mate.getIndex());
+                                        mate=aux;
+                                        break;
                                     }
 
                                 }
@@ -158,10 +158,10 @@ public class Irving {
                     ok=1;
                 }
                 else
-                    if(ok==1){
-                        preferences.preferences.remove(mate);
-                        iterator.remove();
-                    }
+                if(ok==1){
+                    preferences.preferences.remove(mate);
+                    iterator.remove();
+                }
             }
         }
         for(Roommates mate:participants){

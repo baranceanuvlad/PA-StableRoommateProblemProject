@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 public class Roommates {
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-    generator = "sequence_roommates")
+            generator = "sequence_roommates")
     @SequenceGenerator(
             name = "sequence_roommates",
             allocationSize = 1
@@ -34,7 +34,7 @@ public class Roommates {
     @Transient
     int index;
 
-    public BigInteger getId() {
+    public int getId() {
         return id;
     }
 

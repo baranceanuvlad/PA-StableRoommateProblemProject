@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 
 public class MainFrame {
     private String message=null;
+    JFrame f=new JFrame();
     public MainFrame(){}
     public void setMessage(String message){
         this.message=message;
@@ -15,8 +16,10 @@ public class MainFrame {
     public String getMessage(){
         return message;
     }
+    public void showMessage(String message){
+        JOptionPane.showMessageDialog(f,message);
+    }
     public void draw(){
-        JFrame f=new JFrame();
         f.setSize(400,500);//400 width and 500 height
         f.setLayout(null);//using no layout managers
         f.setVisible(true);//making the frame visible
@@ -36,9 +39,8 @@ public class MainFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String name=JOptionPane.showInputDialog("Insert the student's first and last name: ");
-                String id1=JOptionPane.showInputDialog("Insert the student's id: ");
-                String preferences=JOptionPane.showInputDialog("Insert the student's preferences: ");
-                setMessage("add "+name+" "+id1+" "+preferences);
+                String preferences=JOptionPane.showInputDialog("Insert the student's preferences (first and last names): ");
+                setMessage("add "+name+" "+preferences);
             }
         });
 
@@ -47,8 +49,8 @@ public class MainFrame {
         modBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String id1=JOptionPane.showInputDialog("Insert the student's id: ");
-                String preferences=JOptionPane.showInputDialog("Insert the student's new preferences: ");
+                String id1=JOptionPane.showInputDialog("Insert the student's first and last name: ");
+                String preferences=JOptionPane.showInputDialog("Insert the student's new preferences (first and last names): ");
                 setMessage("modify "+id1+" "+preferences);
             }
         });
@@ -58,7 +60,7 @@ public class MainFrame {
         delBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String id1=JOptionPane.showInputDialog("Insert the student's id: ");
+                String id1=JOptionPane.showInputDialog("Insert the student's first and last name: ");
                 setMessage("delete "+id1);
             }
         });
@@ -68,9 +70,10 @@ public class MainFrame {
         addPrefBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String id1=JOptionPane.showInputDialog("Insert the first student's id: ");
-                String id2=JOptionPane.showInputDialog("Insert the second student's id: ");
-                setMessage("addp "+id1+" "+id2);
+                String id1=JOptionPane.showInputDialog("Insert the first student's first and last name: ");
+                String id2=JOptionPane.showInputDialog("Insert the second student's first and last name: ");
+                String nr=JOptionPane.showInputDialog("Insert the preference position: ");
+                setMessage("addp "+id1+" "+id2+" "+nr);
             }
         });
 
