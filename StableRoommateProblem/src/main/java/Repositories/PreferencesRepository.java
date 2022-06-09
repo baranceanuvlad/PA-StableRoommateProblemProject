@@ -10,4 +10,9 @@ public class PreferencesRepository {
         PersistanceManager.getEm().persist(entity);
         PersistanceManager.getEm().getTransaction().commit();
     }
+    static public void updatePreferences(int id,int poz){
+        PersistanceManager.getEm().createNamedQuery("UpdatePreferences")
+                .setParameter(1,id)
+                .setParameter(2,poz);
+    }
 }

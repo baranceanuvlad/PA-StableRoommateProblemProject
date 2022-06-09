@@ -4,6 +4,10 @@ import javax.persistence.*;
 import java.math.BigInteger;
 
 @Entity
+@NamedQueries(
+        @NamedQuery(name="UpdatePreferences",
+            query = "update Preferences p set p.pozprefered=p.pozprefered+1 where p.idperson=?1 and p.pozprefered>?2")
+)
 public class Preferences {
     @Basic
     @Id

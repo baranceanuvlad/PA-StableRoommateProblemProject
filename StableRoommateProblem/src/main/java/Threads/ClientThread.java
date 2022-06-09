@@ -96,8 +96,8 @@ public class ClientThread extends Thread {
                 else if (command[0].equals("solve")) { //////////////////////////////////////////////////////////////////////////////////////////////////////////
                     out.println("Problema rezolvata!");
                     out.flush();
-                    //Irving problema=new Irving();
-                    //problema.solve();
+                    Irving problema=new Irving();
+                    System.out.println(problema.solve());
                     //System.out.println(problema.propolsals);
                     //System.out.println(problema.accepted);
                     //creareTest();

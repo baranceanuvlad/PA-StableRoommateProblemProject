@@ -10,6 +10,7 @@ import java.util.List;
                 query = "select e from Roommates e join Preferences p on p.idprefered=e.id where p.idperson=?1 order by p.pozprefered"),
         @NamedQuery(name = "Roommates.getAll",
                 query = "select e from Roommates e"),
+        @NamedQuery(name="Roommates.findByName", query = "select e from Roommates e where e.firstname=?1 and e.lastname=?2")
 })
 @Entity
 public class Roommates {

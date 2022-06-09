@@ -15,4 +15,10 @@ public class RoommateRepository {
        return PersistanceManager.getEm().createNamedQuery("Roommates.getAll")
                 .getResultList();
     }
+    static public Roommates findByFirstNameLastName(String firstName,String lastName){
+        return (Roommates) PersistanceManager.getEm().createNamedQuery("Roommates.findByName")
+                .setParameter(1,firstName)
+                .setParameter(2,lastName)
+                .getSingleResult();
+    }
 }
