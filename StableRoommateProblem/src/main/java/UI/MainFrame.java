@@ -87,7 +87,7 @@ public class MainFrame {
         });
 
         JButton exitBtn=new JButton("exit");
-        exitBtn.setBounds(75,350,100, 40);//x axis, y axis, width, height
+        exitBtn.setBounds(85,350,100, 40);//x axis, y axis, width, height
         exitBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -96,7 +96,7 @@ public class MainFrame {
         });
 
         JButton exitServerBtn=new JButton("exit server");
-        exitServerBtn.setBounds(225,350,100, 40);//x axis, y axis, width, height
+        exitServerBtn.setBounds(215,350,100, 40);//x axis, y axis, width, height
         exitServerBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

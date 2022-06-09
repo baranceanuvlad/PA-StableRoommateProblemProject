@@ -102,8 +102,13 @@ public class ClientThread extends Thread {
                     else {
                         StringBuilder ans = new StringBuilder();
                         ans.append('#').append('\n');
-                        for (Map.Entry<Roommates, Roommates> entry : map.entrySet())
-                            ans.append(entry.getKey()).append("->").append(entry.getValue()).append('\n');
+                        int nr=0;
+                        for (Map.Entry<Roommates, Roommates> entry : map.entrySet()) {
+                            nr++;
+                            ans.append(nr).append(". ");
+                            ans.append(entry.getKey().getFirstname()).append(" ").append(entry.getKey().getLastname()).append(" -> ")
+                                    .append(entry.getValue().getFirstname()).append(" ").append(entry.getValue().getLastname()).append('\n');
+                        }
                         out.println(ans.toString());
                         out.flush();
                     }
@@ -145,7 +150,7 @@ public class ClientThread extends Thread {
                     Roommates roommates2=RoommateRepository.findByFirstNameLastName(firstName2,lastName2);
                     PreferencesRepository.updatePreferences(roommates1.getId(),poz);
                     PreferencesRepository.create(new Preferences((roommates1.getId()),roommates2.getId(),poz));
-                    out.println("Adaugam preferinta!");
+                    out.println("Am adaugat preferinta!");
                     out.flush();
                 }
                 else if (command[0].equals("show")){
@@ -153,8 +158,17 @@ public class ClientThread extends Thread {
                     String lastName=command[2];
                     Roommates roommates=RoommateRepository.findByFirstNameLastName(firstName,lastName);
                     List<Roommates> lista=RoommateRepository.findPreferences(roommates.getId());
-                    //////////
-                    out.println(lista.toString());
+
+                    int nr=0;
+                    StringBuilder ans=new StringBuilder();
+                    ans.append('#').append('\n');
+                    for(int i=0;i<lista.size();i++)
+                    {
+                        nr++;
+                        ans.append(nr).append(". ");
+                        ans.append(lista.get(i).getFirstname()).append(" ").append(lista.get(i).getLastname()).append('\n');
+                    }
+                    out.println(ans.toString());
                     out.flush();
                 }
                 else if (command[0].equals("delete")){
@@ -165,7 +179,7 @@ public class ClientThread extends Thread {
                     PersistanceManager.getEm().getTransaction().begin();
                     PersistanceManager.getEm().remove(roommates);
                     PersistanceManager.getEm().getTransaction().commit();
-                    out.println("Stergem student!");
+                    out.println("Am sters studentul!");
                     out.flush();
                 }
                 else {
