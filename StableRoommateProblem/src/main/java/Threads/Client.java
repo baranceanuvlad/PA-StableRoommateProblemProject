@@ -48,7 +48,7 @@ public class Client{
             try {
                 String response = in.readLine();
                 if (response != null)
-                    System.out.println(response);
+                    mainFrame.showMessage(response);
                 if (s.equals("exit")) {
                     running = false;
                     break;

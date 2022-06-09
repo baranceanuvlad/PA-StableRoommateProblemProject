@@ -10,11 +10,12 @@ import java.util.List;
                 query = "select e from Roommates e join Preferences p on p.idprefered=e.id where p.idperson=?1 order by p.pozprefered"),
         @NamedQuery(name = "Roommates.getAll",
                 query = "select e from Roommates e"),
+        @NamedQuery(name="Roommates.findByName", query = "select e from Roommates e where e.firstname=?1 and e.lastname=?2")
 })
 @Entity
 public class Roommates {
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-    generator = "sequence_roommates")
+            generator = "sequence_roommates")
     @SequenceGenerator(
             name = "sequence_roommates",
             allocationSize = 1
@@ -33,7 +34,7 @@ public class Roommates {
     @Transient
     int index;
 
-    public BigInteger getId() {
+    public int getId() {
         return id;
     }
 

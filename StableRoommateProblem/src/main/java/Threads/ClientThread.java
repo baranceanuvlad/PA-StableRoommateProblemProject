@@ -6,17 +6,18 @@ import Repositories.RoommateRepository;
 import Roommate.Preferences;
 import Roommate.Roommates;
 import UI.MainFrame;
+import Utilities.PersistanceManager;
 import com.github.javafaker.Faker;
 
+import javax.persistence.Persistence;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.math.BigInteger;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static java.lang.System.out;
 
@@ -34,7 +35,7 @@ public class ClientThread extends Thread {
                 new InputStreamReader(socket.getInputStream()));
         out = new PrintWriter(socket.getOutputStream());
     }
-    public void creareTest(){
+    /*public void creareTest(){
         Faker faker=new Faker();
 
         for(int i=0;i<6;i++){
@@ -60,7 +61,7 @@ public class ClientThread extends Thread {
                 }
             }
         }
-    }
+    }*/
     public void closeThread(){
         System.exit(0);
     }
@@ -71,10 +72,7 @@ public class ClientThread extends Thread {
     public void run() {
 
         try {
-            //socket.setSoTimeout(600000);
-
             while (running) {
-                // Get the request from the input stream: client → server
                 System.out.println("Primesc comanda...");
 
                 String request = in.readLine();
@@ -93,26 +91,60 @@ public class ClientThread extends Thread {
                     System.out.println("Closing server!");
                     server.closeServer();
                 }
-                else if (command[0].equals("solve")) { //////////////////////////////////////////////////////////////////////////////////////////////////////////
-                    out.println("Problema rezolvata!");
+                else if (command[0].equals("solve")) {
+                    Irving problema=new Irving();
+                    Map<Roommates,Roommates> map=problema.solve();
+                    out.println(map.toString());
                     out.flush();
-                    //Irving problema=new Irving();
-                    //problema.solve();
-                    //System.out.println(problema.propolsals);
-                    //System.out.println(problema.accepted);
-                    //creareTest();
                 } else if(command[0].equals("add")){
-                    out.println("Adaugam student!");
+                    String firstName=command[1];
+                    String lastName=command[2];
+                    List<String> pref=new ArrayList<>();
+                    for(int i=3;i<command.length;i++) {
+                        pref.add(command[i]);
+                    }
+                    ///////////////////////////////////////////////////////////////////////////////////////////////////
+                    RoommateRepository.create(new Roommates(firstName,lastName));
+                    Roommates roommates=RoommateRepository.findByFirstNameLastName(firstName,lastName);
+                    for(int i=0;i<pref.size();i++)
+                        PreferencesRepository.create(new Preferences(BigInteger.valueOf(roommates.getId()),RoommateRepository.findByFirstNameLastName(pref.get(i),pref.get(i+1)).getId(),i/2+1));
+
+                    out.println("Am adaugat student!");
                     out.flush();
-                } else if (command[0].equals("modify")){
-                    out.println("Modificam student!");
+                } else if (command[0].equals("modify")){ ////////
+                    String firstName=command[1];
+                    String lastName=command[2];
+                    List<String> pref=new ArrayList<>();
+                    for(int i=3;i<command.length;i++)
+                        pref.add(command[i]);
+                    Roommates roommates=RoommateRepository.findByFirstNameLastName(firstName,lastName);
+                    PreferencesRepository.deletePreferences(roommates.getId());
+                    for(int i=0;i<pref.size();i+=2)
+                        PreferencesRepository.create(new Preferences(BigInteger.valueOf(roommates.getId()),RoommateRepository.findByFirstNameLastName(pref.get(i),pref.get(i+1)).getId(),i/2+1));
+                    out.println("Am modificat student!");
                     out.flush();
                 }
                 else if (command[0].equals("addp")){
+                    String firstName1=command[1];
+                    String lastName1=command[2];
+                    String firstName2=command[3];
+                    String lastName2=command[4];
+                    Integer poz=Integer.valueOf(command[5]);
+                    Roommates roommates1=RoommateRepository.findByFirstNameLastName(firstName1,lastName1);
+                    Roommates roommates2=RoommateRepository.findByFirstNameLastName(firstName2,lastName2);
+                    PreferencesRepository.updatePreferences(roommates1.getId(),poz);
+                    PreferencesRepository.create(new Preferences(BigInteger.valueOf(roommates1.getId()),roommates2.getId(),poz));
                     out.println("Adaugam preferinta!");
                     out.flush();
                 }
                 else if (command[0].equals("delete")){
+                    String firstName=command[1];
+                    String lastName=command[2];
+                    Roommates roommates=RoommateRepository.findByFirstNameLastName(firstName,lastName);
+                    PreferencesRepository.deleteSPreferences(roommates.getId());
+                    PersistanceManager.getEm().getTransaction().begin();
+                    PersistanceManager.getEm().remove(roommates);
+                    PersistanceManager.getEm().getTransaction().commit();
                     out.println("Stergem student!");
                     out.flush();
                 }

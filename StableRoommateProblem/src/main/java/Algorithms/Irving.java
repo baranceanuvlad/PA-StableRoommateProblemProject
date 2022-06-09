@@ -18,7 +18,7 @@ public class Irving {
     public void resetPrtitcipants(){
         this.participants=RoommateRepository.findAll();
     }
-    public void solve(){
+    public Map<Roommates,Roommates> solve(){
         resetPropolsals();
         //System.out.println("Hello");
         for(Roommates roommates:participants){
@@ -85,11 +85,11 @@ public class Irving {
                                         conflict.preferences.remove(mate);
                                     }
                                     else{
-                                         Roommates aux=participants.get(propolsals.get(conflict.getIndex())-1);
-                                         propolsals.set(conflict.getIndex(), mate.getIndex());
-                                         accepted.set(conflict.getIndex(), mate.getIndex());
-                                         mate=aux;
-                                         break;
+                                        Roommates aux=participants.get(propolsals.get(conflict.getIndex())-1);
+                                        propolsals.set(conflict.getIndex(), mate.getIndex());
+                                        accepted.set(conflict.getIndex(), mate.getIndex());
+                                        mate=aux;
+                                        break;
                                     }
 
                                 }
@@ -107,17 +107,17 @@ public class Irving {
         }
         removePreferences();
         solvePhase2();
-        printResult();
+        return printResult();
     }
 
-    private void printResult() {
+    private Map<Roommates,Roommates> printResult() {
         Map<Roommates,Roommates> ans=new HashMap<>();
         for(Roommates mates:participants){
             if(!ans.containsKey(mates)&&!ans.containsValue(mates)){
                 ans.put(mates,mates.preferences.get(0));
             }
         }
-        System.out.println(ans);
+        return  ans;
     }
 
     private void solvePhase2() {
@@ -158,10 +158,10 @@ public class Irving {
                     ok=1;
                 }
                 else
-                    if(ok==1){
-                        preferences.preferences.remove(mate);
-                        iterator.remove();
-                    }
+                if(ok==1){
+                    preferences.preferences.remove(mate);
+                    iterator.remove();
+                }
             }
         }
         for(Roommates mate:participants){
