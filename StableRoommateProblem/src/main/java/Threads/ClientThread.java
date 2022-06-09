@@ -152,8 +152,9 @@ public class ClientThread extends Thread {
                     String firstName=command[1];
                     String lastName=command[2];
                     Roommates roommates=RoommateRepository.findByFirstNameLastName(firstName,lastName);
+                    List<Roommates> lista=RoommateRepository.findPreferences(roommates.getId());
                     //////////
-                    out.println("Stergem student!");
+                    out.println(lista.toString());
                     out.flush();
                 }
                 else if (command[0].equals("delete")){
